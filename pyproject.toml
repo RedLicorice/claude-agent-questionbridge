@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "questionbridge"
+version = "0.1.0"
+description = "Telegram bot + REST API bridge for Claude to ask the owner questions"
+authors = ["Giuseppe"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+start = "questionbridge:start"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiogram = "^3.7"
+fastapi = "^0.110"
+uvicorn = {extras = ["standard"], version = "^0.27"}
+nicegui = "^1.4"
+dynaconf = {extras = ["yaml"], version = "^3.2"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry-core.masonry.api"
