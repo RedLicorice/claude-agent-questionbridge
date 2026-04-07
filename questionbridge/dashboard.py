@@ -28,7 +28,7 @@ async def dashboard():
             ).props("dense")
 
             async def on_toggle(e):
-                store.away = e.value
+                store.away = e.args
 
             away_toggle.on("update:model-value", on_toggle)
 

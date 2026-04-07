@@ -1,0 +1,10 @@
+.git
+.github
+__pycache__
+*.pyc
+*.pyo
+dist/
+*.egg-info/
+.venv/
+settings.local.yaml
+.env

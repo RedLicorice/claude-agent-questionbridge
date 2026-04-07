@@ -8,6 +8,7 @@ Starts three services on the same asyncio event loop:
 """
 
 import asyncio
+import signal
 import uvicorn
 from nicegui import ui
 
@@ -24,6 +25,9 @@ async def _run_bot() -> None:
         try:
             print("[bot] Starting polling…")
             await start_polling()
+        except asyncio.CancelledError:
+            print("[bot] Shutting down.")
+            raise
         except Exception as exc:
             print(f"[bot] Error: {exc!r} — restarting in 5 s…")
             await asyncio.sleep(5)
@@ -38,7 +42,13 @@ async def _main() -> None:
     )
     server = uvicorn.Server(config)
     print(f"[main] QuestionBridge starting on http://{settings.API_HOST}:{settings.API_PORT}")
-    await asyncio.gather(server.serve(), _run_bot())
+    loop = asyncio.get_running_loop()
+    for sig in (signal.SIGINT, signal.SIGTERM):
+        loop.add_signal_handler(sig, server.handle_exit, sig, None)
+    try:
+        await asyncio.gather(server.serve(), _run_bot())
+    except asyncio.CancelledError:
+        pass
 
 
 def run() -> None:
