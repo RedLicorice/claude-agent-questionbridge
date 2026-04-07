@@ -1,21 +1,43 @@
 [tool.poetry]
 name = "questionbridge"
 version = "0.1.0"
-description = "Telegram bot + REST API bridge for Claude to ask the owner questions"
+description = "Telegram bot + REST API bridge for Claude Code agents to ask the owner questions"
 authors = ["Giuseppe"]
 readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/giuse/questionbridge"
+repository = "https://github.com/giuse/questionbridge"
+keywords = ["claude", "telegram", "bot", "mcp", "ai-agent", "fastapi"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications :: Chat",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Typing :: Typed",
+]
+packages = [{include = "questionbridge"}]
+include = ["questionbridge/settings.example.yaml"]
 
 [tool.poetry.scripts]
 start = "questionbridge:start"
+init = "questionbridge:init"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-aiogram = "^3.7"
-fastapi = "^0.110"
-uvicorn = {extras = ["standard"], version = "^0.27"}
-nicegui = "^1.4"
-dynaconf = {extras = ["yaml"], version = "^3.2"}
-
+python = ">=3.11,<4.0"
+aiogram = ">=3.7"
+fastapi = ">=0.110"
+uvicorn = {extras = ["standard"], version = ">=0.27"}
+nicegui = ">=1.4"
+dynaconf = {extras = ["yaml"], version = ">=3.2"}
 
 [build-system]
 requires = ["poetry-core"]

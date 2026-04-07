@@ -6,8 +6,8 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
-import store
-from bot import send_question
+from . import store
+from .bot import send_question
 
 app = FastAPI(title="QuestionBridge API", version="1.0.0")
 
@@ -162,8 +162,10 @@ _MCP_TOOL = {
     },
 }
 
+
 def _mcp_ok(msg_id, result: dict) -> dict:
     return {"jsonrpc": "2.0", "id": msg_id, "result": result}
+
 
 def _mcp_err(msg_id, code: int, message: str) -> dict:
     return {"jsonrpc": "2.0", "id": msg_id, "error": {"code": code, "message": message}}
@@ -175,7 +177,6 @@ async def mcp_handler(request: Request):
     method: str = body.get("method", "")
     msg_id = body.get("id")  # None for notifications (fire-and-forget)
 
-    # Notifications require no response body
     if method.startswith("notifications/"):
         return Response(status_code=204)
 

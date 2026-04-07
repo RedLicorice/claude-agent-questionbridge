@@ -3,8 +3,8 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from config import settings
-import store
+from .config import settings
+from . import store
 
 bot = Bot(token=settings.BOT_TOKEN)
 dp = Dispatcher()

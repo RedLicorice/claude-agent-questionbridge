@@ -1,5 +1,5 @@
 from nicegui import ui
-import store
+from . import store
 
 
 def _status_chip_props(status: str) -> str:
@@ -62,7 +62,6 @@ async def dashboard():
 
                 for q in pending:
                     with ui.card().classes("w-full shadow"):
-                        # Top row: id + timestamp
                         with ui.row().classes("w-full justify-between items-center mb-2"):
                             ui.label(q.id).classes(
                                 "font-mono text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded"
@@ -71,19 +70,16 @@ async def dashboard():
                                 "text-xs text-gray-400"
                             )
 
-                        # Question text (multiline)
                         ui.label(q.question).classes(
                             "text-base font-medium whitespace-pre-wrap break-words"
                         )
 
-                        # Optional context
                         if q.context:
                             with ui.expansion("📎 Context").classes("w-full text-sm mt-1"):
                                 ui.label(q.context).classes(
                                     "text-gray-600 whitespace-pre-wrap text-sm"
                                 )
 
-                        # Answer input + buttons
                         inp = ui.input(placeholder="Free-text answer…").classes("w-full mt-3")
 
                         def make_text_submit(qid, field):
@@ -144,5 +140,4 @@ async def dashboard():
                                 )
 
         await refresh()
-        # Auto-refresh every 2 s (NiceGUI pushes UI updates via websocket)
         ui.timer(2.0, refresh)
